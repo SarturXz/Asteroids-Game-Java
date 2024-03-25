@@ -34,8 +34,9 @@ public class Vector2D {
     }
 
     public Vector2D setDirection(double angle) {
-        double yy = Math.sin(angle) * getMagnitude();
-        double xx = Math.cos(angle) * getMagnitude();
+        double magnitude = getMagnitude();
+        double yy = Math.sin(angle) * magnitude;
+        double xx = Math.cos(angle) * magnitude;
 
         return new Vector2D(xx, yy);
     }
@@ -48,29 +49,24 @@ public class Vector2D {
         return new Vector2D(x + v.getX(), y + v.getY());
     }
 
-    public void limit(double value) {
-        if (x > value) {
-            x = value;
+    public Vector2D limit(double value) {
+        if (getMagnitude() > value){
+            return this.normalize().scale(value);
         }
-        if (x < -value) {
-            x = -value;
-        }
-        if (y > value) {
-            y = value;
-        }
-        if (y < -value) {
-            y = -value;
-        }
+
+        return this;
     }
 
     public Vector2D normalize() {
-        if (getMagnitude() != 0) {
-            return new Vector2D(x / getMagnitude(), y / getMagnitude());
+        double magnitude = getMagnitude();
+
+        if (magnitude != 0) {
+            return new Vector2D(x / magnitude, y / magnitude);
         }
         return new Vector2D(x, y);
     }
 
     public String toString() {
-        return "x: " + x + ", y: " + y;
+        return "x:" + x + ", y:" + y;
     }
 }

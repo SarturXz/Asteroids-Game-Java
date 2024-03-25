@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class Window extends JFrame implements Runnable{
 
-    public static final int WIDTH = 800, HEIGHT = 600;
+    public static final int WIDTH = 1000, HEIGHT = 600;
 
     private final Canvas canvas;
     private Thread thread;
@@ -33,8 +33,6 @@ public class Window extends JFrame implements Runnable{
         setResizable(false);
         setLocationRelativeTo(null);
 
-        setVisible(true);
-
         canvas = new Canvas();
         canvas.setBackground(Color.BLACK);
         canvas.setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -46,6 +44,9 @@ public class Window extends JFrame implements Runnable{
 
         keyboard = new Keyboard();
         canvas.addKeyListener(keyboard);
+
+        setVisible(true);
+
     }
 
     private void update(){
