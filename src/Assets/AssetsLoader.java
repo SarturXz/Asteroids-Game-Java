@@ -6,10 +6,10 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class AssetsLoader {
-    public static BufferedImage imageLoader(String path){
-        try{
+    public static BufferedImage imageLoader(String path) {
+        try {
             return ImageIO.read(Objects.requireNonNull(AssetsLoader.class.getResource(path)));
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return null;

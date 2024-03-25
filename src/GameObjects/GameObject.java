@@ -1,15 +1,16 @@
 package GameObjects;
 
+import Maths.Vector2D;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import Maths.Vector2D;
 
 public abstract class GameObject {
     protected BufferedImage texture;
     protected Vector2D position;
     protected Vector2D scale;
 
-    public GameObject(Vector2D position, Vector2D scale, BufferedImage texture){
+    public GameObject(Vector2D position, Vector2D scale, BufferedImage texture) {
         this.position = position;
         this.texture = texture;
         this.scale = scale;
@@ -21,16 +22,15 @@ public abstract class GameObject {
         this.scale = new Vector2D(1, 1);
     }
 
-    public GameObject(Vector2D position){
+    public GameObject(Vector2D position) {
         this.position = position;
         this.texture = null;
     }
 
 
-
     public abstract void update();
-    public abstract void render(Graphics g);
 
+    public abstract void render(Graphics g);
 
 
     public BufferedImage getTexture() {

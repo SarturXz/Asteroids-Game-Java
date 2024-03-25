@@ -9,21 +9,25 @@ public class Keyboard implements KeyListener {
 
     public static boolean UP, DOWN, LEFT, RIGHT;
 
-    public Keyboard(){
+    public Keyboard() {
         UP = DOWN = LEFT = RIGHT = false;
     }
 
-    public void update(){
+    public static boolean getKey(int key) {
+        return keys[key];
+    }
+
+    public void update() {
         UP = keys[KeyEvent.VK_UP];
         DOWN = keys[KeyEvent.VK_DOWN];
         LEFT = keys[KeyEvent.VK_LEFT];
         RIGHT = keys[KeyEvent.VK_RIGHT];
     }
 
-    public static boolean getKey(int key) { return keys[key]; }
-
     @Override
-    public void keyPressed(KeyEvent e) { keys[e.getKeyCode()] = true; }
+    public void keyPressed(KeyEvent e) {
+        keys[e.getKeyCode()] = true;
+    }
 
     @Override
     public void keyReleased(KeyEvent e) {
@@ -31,5 +35,6 @@ public class Keyboard implements KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {}
+    public void keyTyped(KeyEvent e) {
+    }
 }
