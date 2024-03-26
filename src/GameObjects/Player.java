@@ -1,6 +1,7 @@
 package GameObjects;
 
 import Assets.Assets;
+import Collisions.CollisionChecker;
 import Input.Keyboard;
 import Maths.Vector2D;
 import States.GameState;
@@ -25,6 +26,9 @@ public class Player extends DynamicObject {
     public Player(Vector2D position, Vector2D scale, Vector2D velocity, double maxVel, BufferedImage texture, GameState state) {
         super(position, scale, velocity, maxVel, state, texture);
         fireRate = new Timer();
+
+        this.setRect(new Rectangle(20, 20));
+        this.rectOffset = new Vector2D((double) width / 2 - (double) getRect().width / 2, 10);
     }
 
     @Override

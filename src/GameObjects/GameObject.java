@@ -8,11 +8,14 @@ public abstract class GameObject {
     protected BufferedImage texture;
     protected Vector2D position;
     protected Vector2D scale;
+    protected Rectangle rect;
+    protected Vector2D rectOffset;
 
     public GameObject(Vector2D position, Vector2D scale, BufferedImage texture){
         this.position = position;
         this.texture = texture;
         this.scale = scale;
+        this.rectOffset = new Vector2D();
     }
 
     public GameObject(Vector2D position, BufferedImage texture) {
@@ -55,5 +58,21 @@ public abstract class GameObject {
 
     public void setScale(Vector2D scale) {
         this.scale = scale;
+    }
+
+    public Rectangle getRect() {
+        return rect;
+    }
+
+    public void setRect(Rectangle rect) {
+        this.rect = rect;
+    }
+
+    public Vector2D getRectOffset() {
+        return rectOffset;
+    }
+
+    public void setRectOffset(Vector2D rectOffset) {
+        this.rectOffset = rectOffset;
     }
 }
