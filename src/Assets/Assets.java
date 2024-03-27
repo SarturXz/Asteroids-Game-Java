@@ -17,6 +17,7 @@ public class Assets {
 
     //FX
     public static BufferedImage speedFX;
+    public static BufferedImage[] explosionFX = new BufferedImage[8];
 
     public static void init() throws IOException {
         player = AssetsLoader.imageLoader("/Res/Images/PNG/playerShip1_blue.png");
@@ -34,5 +35,8 @@ public class Assets {
 
         for (int i = 0; i < meteorsTiny.length; i++)
             meteorsTiny[i] = AssetsLoader.imageLoader("/Res/Images/PNG/Meteors/meteorGrey_tiny" + (i+1) +".png");
+
+        for (int i = 0; i < explosionFX.length; i++)
+            explosionFX[i] = AssetsLoader.imageLoader("/Res/Images/PNG/Explosions/"+i+".png");
     }
 }

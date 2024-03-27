@@ -30,7 +30,8 @@ public abstract class DynamicObject extends GameObject {
 
     @Override
     public void update() {
-
+        rect.x = (int) position.getX() + (int) rectOffset.getX();
+        rect.y = (int) position.getY() + (int) rectOffset.getY();
     }
 
     @Override
@@ -44,5 +45,14 @@ public abstract class DynamicObject extends GameObject {
 
     public int getHeight() {
         return height;
+    }
+
+    public void destroy(DynamicObject object){
+        state.getDynamicObjectsList().remove(object);
+        System.out.println("Destroy " + this);
+    }
+
+    protected Vector2D getCenter(){
+        return new Vector2D(position.getX() + (double) width /2, position.getY() + (double) height /2);
     }
 }

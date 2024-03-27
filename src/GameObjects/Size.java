@@ -5,10 +5,10 @@ import  Assets.Assets;
 import java.awt.image.BufferedImage;
 
 public enum Size {
-    BIG(2, Assets.meteorsMed),
-    MED(2, Assets.meteorsSmall),
-    SMALL(2, Assets.meteorsTiny),
-    TINY(0, null);
+    BIG(2, Assets.meteorsBig),
+    MED(2, Assets.meteorsMed),
+    SMALL(2, Assets.meteorsSmall),
+    TINY(0, Assets.meteorsTiny);
 
     public int quantity;
     public BufferedImage[] texture;

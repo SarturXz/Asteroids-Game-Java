@@ -8,8 +8,8 @@ public abstract class GameObject {
     protected BufferedImage texture;
     protected Vector2D position;
     protected Vector2D scale;
-    protected Rectangle rect;
     protected Vector2D rectOffset;
+    protected Rectangle rect;
 
     public GameObject(Vector2D position, Vector2D scale, BufferedImage texture){
         this.position = position;

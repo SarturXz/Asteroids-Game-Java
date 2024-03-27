@@ -9,15 +9,18 @@ import java.awt.image.BufferedImage;
 
 public class Meteor extends DynamicObject{
 
-    private Size size;
+    private final Size size;
     public Meteor(Vector2D position, Vector2D scale, Vector2D velocity, double maxVel, GameState state, BufferedImage texture, Size size) {
         super(position, scale, velocity, maxVel, state, texture);
         this.size = size;
+        this.velocity = this.velocity.scale(maxVel);
         this.setRect(new Rectangle(width, height));
     }
 
     @Override
     public void update() {
+        super.update();
+
         position = position.add(velocity);
 
         if (position.getX() > Main.Window.WIDTH)  { position.setX(-width); }

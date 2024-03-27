@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class Window extends JFrame implements Runnable{
 
-    public static final int WIDTH = 1000, HEIGHT = 600;
+    public static final int WIDTH = 1000, HEIGHT = 720;
 
     private final Canvas canvas;
     private Thread thread;

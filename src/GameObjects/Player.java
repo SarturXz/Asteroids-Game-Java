@@ -6,11 +6,13 @@ import Input.Keyboard;
 import Maths.Vector2D;
 import States.GameState;
 import Utils.Timer;
+import Assets.Animation;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class Player extends DynamicObject {
 
@@ -21,19 +23,61 @@ public class Player extends DynamicObject {
     private Vector2D acceleration = new Vector2D();
     private boolean accelerating = false;
 
-    private Timer fireRate;
+    private boolean isDead = false;
+
+    private final ArrayList<Animation> anims = new ArrayList<>();
+    private int actualAnimID = 0;
+
+    private final Timer fireRate;
 
     public Player(Vector2D position, Vector2D scale, Vector2D velocity, double maxVel, BufferedImage texture, GameState state) {
         super(position, scale, velocity, maxVel, state, texture);
         fireRate = new Timer();
 
         this.setRect(new Rectangle(20, 20));
-        this.rectOffset = new Vector2D((double) width / 2 - (double) getRect().width / 2, 10);
+        this.rectOffset = new Vector2D(((double) width / 2 - (double) getRect().width / 2) + 1, 10);
+
+        BufferedImage[] startAnim = new BufferedImage[] { texture };
+        anims.add(new Animation(
+                startAnim,
+                0,
+                0,
+                false,
+                false
+        ));
+
+        anims.add(new Animation(
+                Assets.explosionFX,
+                100,
+                0,
+                true,
+                false
+        ));
     }
 
     @Override
     public void update() {
+        super.update();
+
+        anims.get(actualAnimID).update();
+
+        if (actualAnimID == 1 && !anims.get(actualAnimID).isPlaying()){
+            destroy(this);
+        }
+
+        for (int i = 0; i < state.getMeteorsList().size(); i++){
+            if (CollisionChecker.checkCollision(this.rect, state.getMeteorsList().get(i).getRect()) && !isDead){
+                actualAnimID = 1;
+                scale = new Vector2D(1, 1);
+                velocity = new Vector2D();
+                isDead = true;
+            }
+        }
+
+        if (isDead) return;;
+
         if (Keyboard.getKey(KeyEvent.VK_SPACE) && !fireRate.isRunning()){
+            fireRate.run(150);
             Vector2D v = heading.scale(width);
             state.getDynamicObjectsList().addFirst(new Laser(
                     getCenter().add(v),
@@ -44,8 +88,6 @@ public class Player extends DynamicObject {
                     state,
                     Assets.laserBlue
             ));
-
-            fireRate.run(150);
         }
 
         if (Keyboard.getKey(KeyEvent.VK_LEFT) || Keyboard.getKey(KeyEvent.VK_A)) {
@@ -89,7 +131,7 @@ public class Player extends DynamicObject {
                 position.getY() + (double) height / 2);
         at2.rotate(angle, (double) width / 2, 0);
 
-        if (accelerating){
+        if (accelerating && !isDead){
             g2d.drawImage(Assets.speedFX, at1, null);
             g2d.drawImage(Assets.speedFX, at2, null);
         }
@@ -97,10 +139,6 @@ public class Player extends DynamicObject {
         at = AffineTransform.getTranslateInstance(position.getX(), position.getY());
         at.rotate(angle, (double) width / 2, (double) height / 2);
         at.scale(scale.getX(), scale.getY());
-        g2d.drawImage(texture, at, null);
-    }
-
-    public Vector2D getCenter(){
-        return new Vector2D(position.getX() + (double) width /2, position.getY() + (double) height /2);
+        g2d.drawImage(anims.get(actualAnimID).getCurrentFrame(), at, null);
     }
 }

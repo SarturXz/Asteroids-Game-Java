@@ -1,5 +1,7 @@
 package GameObjects;
 
+import Collisions.CollisionChecker;
+import Main.Window;
 import Maths.Vector2D;
 import States.GameState;
 
@@ -13,16 +15,28 @@ public class Laser extends DynamicObject{
         this.angle = angle;
         this.velocity = velocity.scale(maxVel);
         this.position.setX(position.getX() - (double) width / 2);
-    }
 
+        setRect(new Rectangle(15, 15));
+        rectOffset = new Vector2D(0, 0);
+    }
     @Override
     public void update() {
+        super.update();
         position = position.add(velocity);
 
-        if (position.getX() > Main.Window.WIDTH)  { state.getDynamicObjectsList().remove(this); }
-        if (position.getY() > Main.Window.HEIGHT) { state.getDynamicObjectsList().remove(this); }
+        if (position.getX() > Window.WIDTH)  { state.getDynamicObjectsList().remove(this); }
+        if (position.getY() > Window.HEIGHT) { state.getDynamicObjectsList().remove(this); }
         if (position.getX() < -width)  { state.getDynamicObjectsList().remove(this); }
         if (position.getY() < -height) { state.getDynamicObjectsList().remove(this); }
+
+        for (int i = 0; i < state.getMeteorsList().size(); i++){
+            if (CollisionChecker.checkCollision(this.getRect(), state.getMeteorsList().get(i).getRect())){
+                state.divideMeteor(state.getMeteorsList().get(i));
+                destroy(state.getMeteorsList().get(i));
+                destroy(this);
+                state.getMeteorsList().remove( state.getMeteorsList().get(i));
+            }
+        }
     }
 
     @Override

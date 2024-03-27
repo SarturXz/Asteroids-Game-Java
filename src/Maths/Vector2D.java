@@ -49,6 +49,11 @@ public class Vector2D {
         return new Vector2D(x + v.getX(), y + v.getY());
     }
 
+    public Vector2D substract(Vector2D v) {
+        return new Vector2D(x - v.getX(), y - v.getY());
+    }
+
+
     public Vector2D limit(double value) {
         if (getMagnitude() > value){
             return this.normalize().scale(value);
